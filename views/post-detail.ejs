@@ -12,7 +12,7 @@
     <h1><%=posts.title %></h1>
     <section id="post-meta">
       <address><a href="mailto:<%= posts.author_email%>"><%= posts.author_email %></a></address>|
-      <time datetime="<%=posts.date %>"><%=posts.date %></time>
+      <time datetime="<%=posts.date %>"><%=posts.humanReadableDate %></time>
     </section>
     <hr>
     <section>
