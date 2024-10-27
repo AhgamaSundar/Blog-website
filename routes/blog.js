@@ -20,9 +20,13 @@ router.get('/new-post',async function(req,res){
 router.post('/posts', async function(req,res){
     req.body;
     const data=[req.body.title,req.body.summary,req.body.content,req.body.author];
+    if (Number(req.body.password)===555){
 
    await db.query('INSERT INTO posts(title,summary,body,author_id) VALUES (?)',[data])
-   res.redirect('/posts');
+   res.redirect('/posts');}
+   else{
+    res.render('wrngpass.ejs');
+   }
 })
 router.get('/posts/:i', async function(req,res){
     const query=`SELECT posts.* ,authors.name AS authors_name,authors.email AS author_email FROM posts 
@@ -45,6 +49,11 @@ router.get('/posts/:i', async function(req,res){
 
     }
     res.render('post-detail',{posts:postData});
+})
+router.get('/update-epost/:id',async function(req,res){
+    await db.query('DELETE FROM POSTS WHERE id=?',[req.params.id]);
+    res.redirect('/posts');
+    
 })
 
 module.exports=router
