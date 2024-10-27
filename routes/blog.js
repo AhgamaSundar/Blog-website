@@ -50,10 +50,20 @@ router.get('/posts/:i', async function(req,res){
     }
     res.render('post-detail',{posts:postData});
 })
-router.get('/update-epost/:id',async function(req,res){
-    await db.query('DELETE FROM POSTS WHERE id=?',[req.params.id]);
-    res.redirect('/posts');
+router.get('/posts/:id/edit',async function(req,res){
+    const query='SELECT * FROM posts WHERE id=?'
+    const [posts]=await db.query(query,[Number(req.params.id)])
+    res.render('update-post.ejs',{post:posts[0]});
     
+})
+router.post('/posts/:id/edit',async function(req,res){
+    if (req.body.password===555){
+    const query='UPDATE posts SET title=?,summary=?,body=? WHERE id=?'
+    await db.query(query,[req.body.title,req.body.summary,req.body.content,req.params.id]);
+    res.redirect('/posts')}
+    else{
+        res.render('wrngpass.ejs')
+    }
 })
 
 module.exports=router
