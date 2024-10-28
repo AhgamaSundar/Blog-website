@@ -57,7 +57,7 @@ router.get('/posts/:id/edit',async function(req,res){
     
 })
 router.post('/posts/:id/edit',async function(req,res){
-    if (req.body.password===555){
+    if (Number(req.body.password)===555){
     const query='UPDATE posts SET title=?,summary=?,body=? WHERE id=?'
     await db.query(query,[req.body.title,req.body.summary,req.body.content,req.params.id]);
     res.redirect('/posts')}
